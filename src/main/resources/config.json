@@ -1,0 +1,21 @@
+{
+  "name": "records-sink",
+  "config": {
+  	"connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+  	"input.data.format": "JSON_SR",
+  	"connection.url": "jdbc:postgresql://localhost:5432/postgres",
+	"topics": "subscriber",  	
+	"connection.user": "root",
+  	"connection.password": "root",
+ 	"insert.mode": "UPSERT",
+	"db.timezone": "UTC",
+	"auto.create": "true",
+	"auto.evolve": "true",
+	"pk.mode": "record_value",
+	"pk.fields": "CASE_NUMBER",	
+	"key.converter":"org.apache.kafka.connect.json.JsonConverter",
+	"value.converter":"org.apache.kafka.connect.json.JsonConverter",
+	"table.name.format": "subscriber",
+	"tasks.max": "1"
+  }
+}

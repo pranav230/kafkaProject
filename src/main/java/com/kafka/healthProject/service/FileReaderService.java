@@ -42,6 +42,7 @@ public class FileReaderService {
                     }
                 } else {
                     if(line.startsWith("PAT")){
+                        assert record != null;
                         record.setPatient(Patient.builder()
                                 .caseNumber(line.substring(3,19).strip())
                                 .id(line.substring(19,35).strip())
@@ -54,6 +55,7 @@ public class FileReaderService {
                                 .planName(line.substring(131).strip())
                                 .build());
                     } else if(line.startsWith("SVC")){
+                        assert record != null;
                         record.setService(com.kafka.healthProject.model.Service.builder()
                                 .caseNumber(line.substring(3,19).strip())
                                 .id(line.substring(19,35).strip())
@@ -65,6 +67,7 @@ public class FileReaderService {
                                 .phyName(line.substring(115).strip())
                                 .build());
                     } else if(line.startsWith("CAS")){
+                        assert record != null;
                         record.setACase(Case.builder()
                                 .caseNumber(line.substring(3,19).strip())
                                 .caseType(line.substring(19,35).strip())

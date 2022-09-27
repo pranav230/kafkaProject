@@ -1,8 +1,8 @@
 package com.kafka.healthProject.producer;
 
 import com.kafka.healthProject.model.Record;
-import com.kafka.healthProject.model.Sub;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.common.serialization.Serdes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -20,11 +20,12 @@ public class RecordProducer {
     KafkaTemplate<String, Record> kafkaTemplate;
 
     public void publishRecord(List<Record> recordList){
+        System.out.println(Serdes.String().getClass().getName());
         for(Record record: recordList) {
             String key = record.getSubscriber().getCaseNumber();
 
             ListenableFuture<SendResult<String, Record>> listenableFuture = kafkaTemplate.sendDefault(key, record);
-            listenableFuture.addCallback(new ListenableFutureCallback<SendResult<String, Record>>() {
+            listenableFuture.addCallback(new ListenableFutureCallback<>() {
                 @Override
                 public void onSuccess(SendResult<String, Record> result) {
                     log.info("Message Sent SuccessFully for the key : {}", key);
