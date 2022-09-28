@@ -1,9 +1,6 @@
 package com.kafka.healthProject.config;
 
 
-import com.kafka.healthProject.model.Record;
-import com.kafka.healthProject.serdes.CustomSerdes;
-import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

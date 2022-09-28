@@ -1,0 +1,78 @@
+--CREATE TABLE SUBSCRIBER_TABLE AS
+--SELECT
+--    S.CASE_NUMBER as cnumber,
+--    S.MEM_ID as id,
+--    S.MEM_FIRST_NAME as firstName,
+--    S.MEM_MIDDLE_NAME as middleName,
+--    S.MEM_LAST_NAME as lastName,
+--    S.MEM_ADD_1 as addr1,
+--    S.MEM_ADD_2 as addr2,
+--    S.MEM_CITY as city,
+--    S.MEM_PIN as pin,
+--    count(*) as total
+--FROM SUBSCRIBER S
+--GROUP BY CASE_NUMBER, MEM_ID, MEM_FIRST_NAME, MEM_MIDDLE_NAME, MEM_LAST_NAME, MEM_ADD_1, MEM_ADD_2, MEM_CITY, MEM_PIN;
+--
+CREATE STREAM SUB_KEYED AS SELECT * FROM subscriber PARTITION BY case_number;
+
+CREATE TABLE TEMP_TABLE1(
+    CASE_NUMBER varchar primary key,
+    MEM_ID varchar,
+    MEM_FIRST_NAME varchar,
+    MEM_MIDDLE_NAME varchar,
+    MEM_LAST_NAME varchar,
+    MEM_ADD_1 varchar,
+    MEM_ADD_2 varchar,
+    MEM_CITY varchar,
+    MEM_PIN varchar
+) WITH (KAFKA_TOPIC='SUB_KEYED', VALUE_FORMAT='json');
+
+CREATE TABLE SUBSCRIBER_TABLE AS SELECT * FROM TEMP_TABLE1;
+
+
+CREATE STREAM SERVICE_KEYED AS SELECT * FROM service PARTITION BY case_number;
+
+CREATE TABLE TEMP_TABLE2(
+    CASE_NUMBER varchar primary key,
+    SVC_ID varchar,
+    SVC_TYPE varchar,
+    SVC_CODE varchar,
+    SVC_FAC_ID varchar,
+    SVC_FAC_NAME varchar,
+    SVC_PHY_ID varchar,
+    SVC_PHY_NAME varchar
+) WITH (KAFKA_TOPIC='SERVICE_KEYED', VALUE_FORMAT='json');
+
+CREATE TABLE SERVICE_TABLE AS SELECT * FROM TEMP_TABLE2;
+
+
+CREATE STREAM CASE_KEYED AS SELECT * FROM cases PARTITION BY case_number;
+
+CREATE TABLE TEMP_TABLE3(
+    CASE_NUMBER varchar primary key,
+    CASE_TYPE varchar,
+    CASE_CODE varchar,
+    CASE_START_DATE varchar,
+    CASE_END_DATE varchar,
+    CASE_AUTH_TYPE varchar,
+    CASE_STATUS varchar
+) WITH (KAFKA_TOPIC='CASE_KEYED', VALUE_FORMAT='json');
+
+CREATE TABLE CASE_TABLE AS SELECT * FROM TEMP_TABLE3;
+
+
+CREATE STREAM PATIENT_KEYED AS SELECT * FROM patient PARTITION BY case_number;
+
+CREATE TABLE TEMP_TABLE4(
+    CASE_NUMBER varchar primary key,
+    PAT_ID varchar,
+    PAT_FIRST_NAME varchar,
+    PAT_MIDDLE_NAME varchar,
+    PAT_LAST_NAME varchar,
+    PAT_SEX varchar,
+    PAT_DOB varchar,
+    PAT_PLAN_TYPE varchar,
+    PAT_PLAN_NAME varchar
+) WITH (KAFKA_TOPIC='PATIENT_KEYED', VALUE_FORMAT='json');
+
+CREATE TABLE PATIENT_TABLE AS SELECT * FROM TEMP_TABLE4;
