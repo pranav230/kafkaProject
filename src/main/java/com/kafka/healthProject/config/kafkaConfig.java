@@ -13,7 +13,7 @@ import org.springframework.kafka.config.KafkaStreamsConfiguration;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.kafka.healthProject.constants.Constants.STREAMS_APP;
+import static com.kafka.healthProject.constants.KafkaConstants.STREAMS_APP;
 import static org.apache.kafka.streams.StreamsConfig.*;
 
 @Configuration

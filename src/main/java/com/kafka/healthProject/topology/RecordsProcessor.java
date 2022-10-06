@@ -11,7 +11,7 @@ import org.apache.kafka.streams.kstream.Produced;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static com.kafka.healthProject.constants.Constants.*;
+import static com.kafka.healthProject.constants.KafkaConstants.*;
 
 @Component
 @Slf4j

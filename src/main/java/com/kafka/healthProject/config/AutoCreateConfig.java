@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.config.TopicBuilder;
 
-import static com.kafka.healthProject.constants.Constants.AUTH_TOPIC;
+import static com.kafka.healthProject.constants.KafkaConstants.AUTH_TOPIC;
 
 @Configuration
 @Profile("local")

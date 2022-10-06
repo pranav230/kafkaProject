@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.kafka.healthProject.constants.Constants.*;
+import static com.kafka.healthProject.constants.KafkaConstants.*;
 
 @Service
 public class FileReaderService {

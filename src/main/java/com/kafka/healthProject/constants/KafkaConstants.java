@@ -3,7 +3,7 @@ package com.kafka.healthProject.constants;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Constants {
+public class KafkaConstants {
     public static final String AUTH_TOPIC = "auth-topic";
     public static final String STREAMS_APP = "streams-app";
     public static final String SUB = "SUB";
