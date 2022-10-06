@@ -11,6 +11,8 @@ import org.apache.kafka.streams.kstream.Produced;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static com.kafka.healthProject.constants.Constants.*;
+
 @Component
 @Slf4j
 public class RecordsProcessor {
@@ -18,18 +20,18 @@ public class RecordsProcessor {
     @Autowired
     void buildPipeline(StreamsBuilder streamsBuilder) {
         KStream<String, Record> messageStream = streamsBuilder
-                .stream("auth-topic", Consumed.with(Serdes.String(), CustomSerdes.Record()));
+                .stream(AUTH_TOPIC, Consumed.with(Serdes.String(), CustomSerdes.Record()));
 
-        messageStream.mapValues(record -> record.getSubscriber())
-                .to("subscriber-stream", Produced.with(Serdes.String(), CustomSerdes.Subscriber()));
+        messageStream.mapValues(Record::getSubscriber)
+                .to(SUBSCRIBER_STREAM, Produced.with(Serdes.String(), CustomSerdes.Subscriber()));
 
-        messageStream.mapValues(record -> record.getService())
-                .to("service-stream", Produced.with(Serdes.String(), CustomSerdes.Service()));
+        messageStream.mapValues(Record::getService)
+                .to(SERVICE_STREAM, Produced.with(Serdes.String(), CustomSerdes.Service()));
 
-        messageStream.mapValues(record -> record.getACase())
-                .to("cases-stream", Produced.with(Serdes.String(), CustomSerdes.Case()));
+        messageStream.mapValues(Record::getACase)
+                .to(CASES_STREAM, Produced.with(Serdes.String(), CustomSerdes.Case()));
 
-        messageStream.mapValues(record -> record.getPatient())
-                .to("patient-stream", Produced.with(Serdes.String(), CustomSerdes.Patient()));
+        messageStream.mapValues(Record::getPatient)
+                .to(PATIENT_STREAM, Produced.with(Serdes.String(), CustomSerdes.Patient()));
     }
 }

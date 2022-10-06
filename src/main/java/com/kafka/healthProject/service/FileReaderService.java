@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.kafka.healthProject.constants.Constants.*;
+
 @Service
 public class FileReaderService {
     public List<Record> readFile(RecordRequest recordRequest){
@@ -22,11 +24,11 @@ public class FileReaderService {
             String line;
             Record record = null;
             while((line=br.readLine())!=null) {
-                if(line.startsWith("SUB") || line.startsWith("TRL")) {
+                if(line.startsWith(SUB) || line.startsWith(TRL)) {
                     if(record != null)
                         recordList.add(record);
 
-                    if(line.startsWith("SUB")) {
+                    if(line.startsWith(SUB)) {
                         record = new Record();
                         record.setSubscriber(Sub.builder()
                                 .caseNumber(line.substring(3, 19).strip())
@@ -41,7 +43,7 @@ public class FileReaderService {
                                 .build());
                     }
                 } else {
-                    if(line.startsWith("PAT")){
+                    if(line.startsWith(PAT)){
                         assert record != null;
                         record.setPatient(Patient.builder()
                                 .caseNumber(line.substring(3,19).strip())
@@ -54,7 +56,7 @@ public class FileReaderService {
                                 .planType(line.substring(115,131).strip())
                                 .planName(line.substring(131).strip())
                                 .build());
-                    } else if(line.startsWith("SVC")){
+                    } else if(line.startsWith(SVC)){
                         assert record != null;
                         record.setService(com.kafka.healthProject.model.Service.builder()
                                 .caseNumber(line.substring(3,19).strip())
@@ -66,7 +68,7 @@ public class FileReaderService {
                                 .phyId(line.substring(99,115).strip())
                                 .phyName(line.substring(115).strip())
                                 .build());
-                    } else if(line.startsWith("CAS")){
+                    } else if(line.startsWith(CAS)){
                         assert record != null;
                         record.setACase(Case.builder()
                                 .caseNumber(line.substring(3,19).strip())

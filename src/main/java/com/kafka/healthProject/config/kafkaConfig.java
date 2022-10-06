@@ -13,6 +13,7 @@ import org.springframework.kafka.config.KafkaStreamsConfiguration;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.kafka.healthProject.constants.Constants.STREAMS_APP;
 import static org.apache.kafka.streams.StreamsConfig.*;
 
 @Configuration
@@ -25,7 +26,7 @@ public class kafkaConfig {
     @Bean(name = KafkaStreamsDefaultConfiguration.DEFAULT_STREAMS_CONFIG_BEAN_NAME)
     KafkaStreamsConfiguration kStreamsConfig() {
         Map<String, Object> props = new HashMap<>();
-        props.put(APPLICATION_ID_CONFIG, "streams-app");
+        props.put(APPLICATION_ID_CONFIG, STREAMS_APP);
         props.put(BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
 
