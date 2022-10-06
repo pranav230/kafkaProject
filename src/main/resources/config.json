@@ -4,7 +4,7 @@
   	"connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
   	"input.data.format": "JSON_SR",
   	"connection.url": "jdbc:postgresql://localhost:5432/postgres",
-	"topics": "subscriber",  	
+	"topics": "subscriber",
 	"connection.user": "root",
   	"connection.password": "root",
  	"insert.mode": "UPSERT",
